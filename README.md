@@ -1,5 +1,4 @@
-#Ohjelmointistudio 1:n miniprojekti, roguelike-peli.
-test
+Ohjelmointistudio 1:n miniprojekti, roguelike-peli.
 
 Ryhmä: Esa Palosaari, Jouni Lohikoski, Erik Boström
 
