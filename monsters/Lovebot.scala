@@ -1,4 +1,4 @@
-package o1.robots
+package monsters
 
 import Math._
 import o1.grid._

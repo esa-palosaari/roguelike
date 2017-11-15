@@ -1,4 +1,4 @@
-package o1.robots
+package monsters
 
 import o1.grid._
 import scala.collection.mutable.Buffer

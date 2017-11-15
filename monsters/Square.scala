@@ -1,5 +1,4 @@
-package o1.robots
-
+package monsters
 /** The trait `Square` represents squares in a robot world as an abstract concept.
   *
   * A square object is potentially mutable: its state can change as robots enter and exit it.
