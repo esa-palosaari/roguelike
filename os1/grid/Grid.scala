@@ -1,4 +1,4 @@
-package o1.grid
+package os1.grid
 
 import scala.collection.mutable.Buffer
 import scala.reflect.ClassTag

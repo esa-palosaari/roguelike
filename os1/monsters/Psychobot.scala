@@ -1,6 +1,6 @@
-package monsters
+package os1.monsters
 
-import o1.grid._
+import os1.grid._
 import Math._
 
 /** The class Psychobot represents the "brains" (or AI) of robots 
@@ -55,7 +55,7 @@ class Psychobot(name: String, body: RobotBody) extends RobotBrain(name, body) {
     // scan for a mobile bot, 4 directions, starting from North
     // cannot scan through walls
     // does not attack broken robots
-    val dirs = o1.grid.Direction.Clockwise
+    val dirs = os1.grid.Direction.Clockwise
     for(dir <- dirs) {
       var i = 1  
       var ruutu = this.body.location.neighbor(dir)

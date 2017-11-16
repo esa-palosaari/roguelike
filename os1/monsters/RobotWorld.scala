@@ -1,6 +1,6 @@
-package monsters
+package os1.monsters
 
-import o1.grid._
+import os1.grid._
 import scala.collection.mutable.Buffer
 
 /** An instance of the class `RobotWorld` represents a two dimensional world that 

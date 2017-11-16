@@ -1,4 +1,4 @@
-package o1.grid
+package os1.grid
 
 
 /** The class `Direction` represents compass directions in a grid's coordinate system.

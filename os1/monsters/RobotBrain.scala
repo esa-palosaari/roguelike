@@ -1,6 +1,6 @@
-package monsters
+package os1.monsters
 
-import o1.grid._
+import os1.grid._
 
 
 /** The class `RobotBrain` represents the "brains" (or artificial intelligence, AI) of virtual 

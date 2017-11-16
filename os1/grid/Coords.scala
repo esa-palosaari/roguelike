@@ -1,5 +1,5 @@
 
-package o1.grid
+package os1.grid
 
 
 /** An object of type `Coords` represents a pair of integer coordinates on two axes named x and y. 

@@ -1,6 +1,6 @@
-package monsters
+package os1.monsters
 
-import o1.grid._
+import os1.grid._
 
 
 /** The class `RobotBody` represents virtual robots (or "bots") which inhabit two-dimensional 

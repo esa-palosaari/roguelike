@@ -1,7 +1,8 @@
-package monsters
+package os1.monsters
 
 import Math._
-import o1.grid._
+
+import os1.grid._
 
 /** The class Lovebot represents the "brains" (or AI) of robots which have 
  *  another robot as their "beloved". A lovebot tries to home in on its beloved.
