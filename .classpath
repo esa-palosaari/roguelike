@@ -3,10 +3,10 @@
 	<classpathentry kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
-	<classpathentry kind="lib" path="/u/15/palosae2/unix/workspace/O1A-extends/lib/akka-actor_2.12-2.5.4.jar"/>
-	<classpathentry kind="lib" path="/u/15/palosae2/unix/workspace/O1A-extends/lib/config-1.3.0.jar"/>
-	<classpathentry kind="lib" path="/u/15/palosae2/unix/workspace/O1A-extends/lib/scala-swing_2.12-2.0.0.jar"/>
-	<classpathentry kind="lib" path="/u/15/palosae2/unix/workspace/O1A-extends/lib/smcl-public-interfaces_2.12-1.0-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/u/15/palosae2/unix/workspace/O1A-extends/lib/smcl-scala-library_2.12-0.11-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/u/15/palosae2/unix/Projektit/os1-miniprojekti-roguelike/lib/akka-actor_2.12-2.5.4.jar"/>
+	<classpathentry kind="lib" path="/u/15/palosae2/unix/Projektit/os1-miniprojekti-roguelike/lib/config-1.3.0.jar"/>
+	<classpathentry kind="lib" path="/u/15/palosae2/unix/Projektit/os1-miniprojekti-roguelike/lib/scala-swing_2.12-2.0.0.jar"/>
+	<classpathentry kind="lib" path="/u/15/palosae2/unix/Projektit/os1-miniprojekti-roguelike/lib/smcl-public-interfaces_2.12-1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/u/15/palosae2/unix/Projektit/os1-miniprojekti-roguelike/lib/smcl-scala-library_2.12-0.11-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
