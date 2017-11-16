@@ -59,11 +59,11 @@ class Psychobot(name: String, body: RobotBody) extends RobotBrain(name, body) {
     for(dir <- dirs) {
       var i = 1  
       var ruutu = this.body.location.neighbor(dir)
-      while(!world.apply(ruutu).isUnpassable && world.apply(ruutu).robot.isEmpty) {
+      while(!world.elementAt(ruutu).isUnpassable && world.elementAt(ruutu).robot.isEmpty) {
         ruutu = ruutu.neighbor(dir)     
       }
-      if(world.apply(ruutu).robot.exists(_.isMobile)) {
-        returnBot = world.apply(ruutu).robot
+      if(world.elementAt(ruutu).robot.exists(_.isMobile)) {
+        returnBot = world.elementAt(ruutu).robot
         suunta = dir
         return
       }
