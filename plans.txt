@@ -1,0 +1,12 @@
+17.11.2017 (pair programming)
+
+Hero.class(visibleRadius: Int): RobotBody
+def visibilityToMonster(loc: Location): Option[Direction]
+// returns the direction (wrapped in Some) from monster to hero (may be None)
+def visibleSquares: Option[Buffer[Coord]]
+// returns a buffer of coordinates visible to the hero
+
+Monster.class (name: String, body: RobotBody, hero: Hero)
+def visibilityToHero: Option[Direction]
+// calls hero.visibilityToMonster(this.body.location) and returns the direction
+// from the monster to hero if visible (wrapped in Some), otherwise returns None
