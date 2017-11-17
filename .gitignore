@@ -1,6 +1,6 @@
 /bin/
 /lib/
-.settings/
-.cache
-.cache-main
+/.settings/
+/.cache
+/.cache-main
 
