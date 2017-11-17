@@ -90,6 +90,12 @@ abstract class Grid[ElementType: ClassTag](val width: Int, val height: Int) {
       elem <- Option(this(new Coords(col, row)))
     } yield elem
   
+  def allElementsIndexes: Iterable[(ElementType, Coords)] = 
+    for {
+      row <- 0 until this.height
+      col <- 0 until this.width
+      elem <- Option(this(new Coords(col, row)))
+    } yield (elem, new Coords(col, row))
   
 }
 
