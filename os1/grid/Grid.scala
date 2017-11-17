@@ -38,8 +38,13 @@ abstract class Grid[ElementType: ClassTag](val width: Int, val height: Int) {
   
   /** Modifies the grid by replacing the existing element at the given location 
     * with the new, given element.  */
-  def update(location: Coords, newElement: ElementType) = {
+  def update(location: Coords, newElement: ElementType): Unit = {
     this.contents(location.x)(location.y) = newElement
+  }
+  def update(area: Box, newElement: ElementType): Unit = {
+    for(x <- area.topLeft.x to area.bottomRight.x; y <- area.topLeft.y to area.bottomRight.y){
+      this.update(Coords(x, y), newElement)
+    }
   }
 
   
@@ -53,6 +58,7 @@ abstract class Grid[ElementType: ClassTag](val width: Int, val height: Int) {
     * For instance,a grid with a width and height of 5 will contain (0, 0) 
     * and (4, 4) but not (-1, -1), (4, 5) or (5, 4). */
   def contains(location: Coords): Boolean = this.contains(location.x, location.y) 
+  def contains(area: Box): Boolean = this.contains(area.topLeft) && this.contains(area.bottomRight)
 
 
   /** Returns a list of all the neighboring elements of the indicated element. Depending on 

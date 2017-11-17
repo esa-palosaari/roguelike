@@ -58,6 +58,9 @@ class RobotWorld(floorWidth: Int, floorHeight: Int) extends Grid[Square](floorWi
   def addWall(location: Coords) = {
     this.update(location, Wall)
   }
+  def addWalls(area: Box) = {
+    this.update(area, Wall)
+  }
 
   
   /** Returns the number of robots (robot bodies) that have been added to this world. */

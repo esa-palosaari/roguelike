@@ -45,3 +45,8 @@ class Coords(val x: Int, val y: Int) {
     
   
 }
+
+object Coords{
+  
+  def apply(x: Int, y: Int) = new Coords(x, y)
+}

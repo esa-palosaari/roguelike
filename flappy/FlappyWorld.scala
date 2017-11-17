@@ -47,7 +47,8 @@ object FlappyWorld extends App {
     }    
   }
   
-  var floor = new RobotWorld(floorWidth, floorHeight)
+  //var floor = new RobotWorld(floorWidth, floorHeight)
+  var floor = WorldGenerator.default(floorWidth, floorHeight, 1)
   
   /** This view is responsible for updating the model at static intervals,
    * listening to key presses and mouse movements and most importantly, drawing
