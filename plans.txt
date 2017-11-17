@@ -1,4 +1,4 @@
-17.11.2017 (pair programming)
+17.11.2017 (pair programming/planning)
 
 Hero.class(visibleRadius: Int): RobotBody
 def visibilityToMonster(loc: Location): Option[Direction]
