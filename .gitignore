@@ -2,5 +2,5 @@
 /lib/
 .settings/
 .cache
-.cache-main
+".cache-main"
 
