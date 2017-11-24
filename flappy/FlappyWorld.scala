@@ -72,7 +72,6 @@ object FlappyWorld extends App {
       
       for (pos <- positions) {
         pic = wallPic.onto(pic, pos)
-        println(pos)
       }
       
   //    pic = pic.placeCopies(wallPic, positions.toSeq.take(150))
