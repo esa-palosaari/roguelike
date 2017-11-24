@@ -68,14 +68,22 @@ object FlappyWorld extends App {
     def makePic() = {
       var pic = makeBackground()
       
-      for(tile <- floor.allElementsIndexes){
+      val positions = floor.allElementsIndexes.filter(_._1 == Wall).map(elem => new Pos(elem._2.x * tileSize + tileSize / 2, elem._2.y * tileSize + tileSize / 2))
+      
+      for (pos <- positions) {
+        pic = wallPic.onto(pic, pos)
+        println(pos)
+      }
+      
+  //    pic = pic.placeCopies(wallPic, positions.toSeq.take(150))
+      /*for(tile <- floor.allElementsIndexes){
         tile._1 match {
           case Wall => {
             pic = pic.place(wallPic, new Pos(tile._2.x * tileSize + tileSize / 2, tile._2.y * tileSize + tileSize / 2))
           }
           case _ => Unit
         }
-      }
+      }*/
       
       pic
     }
