@@ -81,7 +81,7 @@ object FlappyWorld extends App {
     
     // And whenever any key is pressed and released, we make her jump
     override def onKeyUp(key: Key) = {
-      bird.jump()
+      // bird.jump()
     } 
     
   }
