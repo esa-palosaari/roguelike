@@ -20,8 +20,13 @@ object FlappyWorld extends App {
   
   
   
+  def coords2Pos(coords: Coords): Pos = {
+    return new Pos(coords.x, coords.y)
+  }
+  
   //val background = rectangle(width, height, Blue)
   val flappyPic = circle(20, Red)
+  val heroPic2 = circle(20, Green)
   val wallPic = rectangle(tileSize, tileSize, Red)
   
   def makeBackground() = rectangle(width, height, Blue)
@@ -60,7 +65,7 @@ object FlappyWorld extends App {
     }
   }
 
-  var hero = new Hero(4, floor, new Coords(5,5), North)
+  var hero = new Hero(4, floor, new Coords(floorWidth/2,floorHeight), North)
   
   /** This view is responsible for updating the model at static intervals,
    * listening to key presses and mouse movements and most importantly, drawing
@@ -79,8 +84,7 @@ object FlappyWorld extends App {
     
     def makePic() = {
       var pic = floor_pic
-      
-      pic
+      pic.place(heroPic2, coords2Pos(hero.location))  
     }
     
     // And whenever any key is pressed and released, we make her jump
@@ -92,6 +96,7 @@ object FlappyWorld extends App {
         case Key.KpRight => East
         case Key.KpLeft => West
       }
+      println("we turn ", d)
       hero.spinTowards(d)
         
     } 
