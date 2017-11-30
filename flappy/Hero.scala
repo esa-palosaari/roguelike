@@ -18,6 +18,8 @@ import math._
  * @param initialLocation  the initial location of the hero in its world
  * @param initialFacing    the direction the hero initially faces in
  * @param visibleRadius    the visibility distance/radius of the hero in the grid
+ * 
+ * Look from RobotBody how to move Hero and orther stuff.
  */
 class Hero(visibleRadius: Int, world: RobotWorld, initialLocation: Coords, initialFacing: Direction) 
   extends RobotBody(world, initialLocation, initialFacing) {
