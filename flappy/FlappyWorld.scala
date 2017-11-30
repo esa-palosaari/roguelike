@@ -47,8 +47,19 @@ object FlappyWorld extends App {
       ySpeed = 20
     }    
   }
-  
-  var floor = new RobotWorld(floorWidth, floorHeight)
+
+  //var floor = new RobotWorld(floorWidth, floorHeight)
+  var floor = WorldGenerator.default(floorWidth, floorHeight, 2)
+  var floor_pic = makeBackground()
+  for(tile <- floor.allElementsIndexes){
+    tile._1 match{
+      case Wall => {
+        floor_pic = wallPic.onto(floor_pic, new Pos(tile._2.x * tileSize + tileSize / 2, tile._2.y * tileSize + tileSize / 2))
+      }
+      case _ => Unit
+    }
+  }
+
   var hero = new Hero(4, floor, new Coords(5,5), North)
   
   /** This view is responsible for updating the model at static intervals,
@@ -67,16 +78,7 @@ object FlappyWorld extends App {
     //def makePic() = background.place(flappyPic, new Pos(width / 2, bird.y))
     
     def makePic() = {
-      var pic = makeBackground()
-      
-      for(tile <- floor.allElementsIndexes){
-        tile._1 match {
-          case Wall => {
-            pic = pic.place(wallPic, new Pos(tile._2.x * tileSize + tileSize / 2, tile._2.y * tileSize + tileSize / 2))
-          }
-          case _ => Unit
-        }
-      }
+      var pic = floor_pic
       
       pic
     }
