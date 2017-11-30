@@ -25,6 +25,7 @@ class Hero(visibleRadius: Int, world: RobotWorld, initialLocation: Coords, initi
   extends RobotBody(world, initialLocation, initialFacing) {
 	
   var radius = visibleRadius;
+  var heroPic = None //  circle(20, Red)
 	
   // returns the direction (wrapped in Some) from monster to hero 
   // May be None if the hero cannot see the monster.
