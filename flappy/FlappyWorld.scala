@@ -48,7 +48,7 @@ object FlappyWorld extends App {
   }
   
   //var floor = new RobotWorld(floorWidth, floorHeight)
-  var floor = WorldGenerator.default(floorWidth, floorHeight, 1)
+  var floor = WorldGenerator.default(floorWidth, floorHeight, 2)
   
   /** This view is responsible for updating the model at static intervals,
    * listening to key presses and mouse movements and most importantly, drawing
@@ -71,7 +71,7 @@ object FlappyWorld extends App {
       for(tile <- floor.allElementsIndexes){
         tile._1 match {
           case Wall => {
-            pic = pic.place(wallPic, new Pos(tile._2.x * tileSize + tileSize / 2, tile._2.y * tileSize + tileSize / 2))
+            pic = wallPic.onto(pic, new Pos(tile._2.x * tileSize + tileSize / 2, tile._2.y * tileSize + tileSize / 2))
           }
           case _ => Unit
         }

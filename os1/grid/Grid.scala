@@ -103,6 +103,13 @@ abstract class Grid[ElementType: ClassTag](val width: Int, val height: Int) {
       elem <- Option(this(new Coords(col, row)))
     } yield (elem, new Coords(col, row))
   
+  def elementsAt(area: Box): Iterable[ElementType] =
+    for {
+      row <- area.topLeft.x to area.bottomRight.x
+      col <- area.topLeft.y to area.bottomRight.y
+      elem <- Option(this(new Coords(row, col)))
+    } yield elem
+  
 }
 
 
