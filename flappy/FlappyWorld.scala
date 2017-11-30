@@ -21,11 +21,12 @@ object FlappyWorld extends App {
   
   
   def coords2Pos(coords: Coords): Pos = {
-    return new Pos(coords.x, coords.y)
+    val x = coords.x + 1
+    val y = coords.y + 1
+    return new Pos(x * tileSize - tileSize/2, y * tileSize - tileSize/2)
   }
   
   //val background = rectangle(width, height, Blue)
-  val flappyPic = circle(20, Red)
   val heroPic2 = circle(20, Green)
   val wallPic = rectangle(tileSize, tileSize, Red)
   
@@ -35,28 +36,17 @@ object FlappyWorld extends App {
    * with at least 3 obstacles, but you are free to take it as much further you
    * want. */
   object Flappy {
-    var y      = 200   // The current height of Flappy
-    var ySpeed = 0     // Her vertical speed
-    val yAccel = 2     // ...and her vertical acceleration
     
     /* Each time the model is updated ...*/
     def act()={
-      // ..use the speed to move flappy
-      y      = math.min(y - ySpeed, height)
-      // ..and update the speed with the gravity
-      ySpeed = ySpeed - yAccel
+    // TODO ****************  MOnsters here keep moving all the time towards hero (see Hero.visibilityToMonster)
     }
-    
-    /* If the bird jumps, its upward speed is set to 20 */
-    def jump()={
-      ySpeed = 20
-    }    
   }
 
   //var floor = new RobotWorld(floorWidth, floorHeight)
   var floor = WorldGenerator.default(floorWidth, floorHeight, 2)
   var floor_pic = makeBackground()
-  for(tile <- floor.allElementsIndexes){
+  for(tile <- floor.allElementsIndexes) {
     tile._1 match{
       case Wall => {
         floor_pic = wallPic.onto(floor_pic, new Pos(tile._2.x * tileSize + tileSize / 2, tile._2.y * tileSize + tileSize / 2))
@@ -65,7 +55,7 @@ object FlappyWorld extends App {
     }
   }
 
-  var hero = new Hero(4, floor, new Coords(floorWidth/2,floorHeight), North)
+  var hero = new Hero(4, floor, new Coords(5, 5), North)
   
   /** This view is responsible for updating the model at static intervals,
    * listening to key presses and mouse movements and most importantly, drawing
@@ -78,26 +68,27 @@ object FlappyWorld extends App {
     
     // and on each time tick, make her act
     override def onTick() = bird.act()
-
-    // When we need to draw Flappy, we make an image with flappy on the background
-    //def makePic() = background.place(flappyPic, new Pos(width / 2, bird.y))
     
     def makePic() = {
       var pic = floor_pic
       pic.place(heroPic2, coords2Pos(hero.location))  
     }
     
-    // And whenever any key is pressed and released, we make her jump
+    // And whenever any key is pressed we make it move
     override def onKeyUp(key: Key) = {
       // bird.jump()
       var d : os1.grid.Direction = key match {
-        case Key.KpUp => North
-        case Key.KpDown => South
-        case Key.KpRight => East
-        case Key.KpLeft => West
+        case Key.Up => North
+        case Key.Down => South
+        case Key.Right => East
+        case Key.Left => West
+        case _ => hero.facing
       }
-      println("we turn ", d)
       hero.spinTowards(d)
+      println(hero.neighboringSquare(d)) // DEBUG
+      if(hero.canMoveTowards(d))
+        hero.moveTowards(d)
+        
         
     } 
     
