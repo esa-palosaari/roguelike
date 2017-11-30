@@ -85,7 +85,9 @@ object FlappyWorld extends App {
         case _ => hero.facing
       }
       hero.spinTowards(d)
-      println(hero.neighboringSquare(d)) // DEBUG
+      
+      println("DEBUG:", hero.neighboringSquare(d)) // DEBUG
+      
       if(hero.canMoveTowards(d))
         hero.moveTowards(d)
         
