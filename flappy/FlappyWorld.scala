@@ -3,6 +3,7 @@ import o1._
 import s1._
 import os1.monsters._
 import os1.grid._
+import scala.swing.event.Key
 
 object FlappyWorld extends App {
 
@@ -48,6 +49,7 @@ object FlappyWorld extends App {
   }
   
   var floor = new RobotWorld(floorWidth, floorHeight)
+  var hero = new Hero(4, floor, new Coords(5,5), North)
   
   /** This view is responsible for updating the model at static intervals,
    * listening to key presses and mouse movements and most importantly, drawing
@@ -82,6 +84,14 @@ object FlappyWorld extends App {
     // And whenever any key is pressed and released, we make her jump
     override def onKeyUp(key: Key) = {
       // bird.jump()
+      var d : os1.grid.Direction = key match {
+        case Key.KpUp => North
+        case Key.KpDown => South
+        case Key.KpRight => East
+        case Key.KpLeft => West
+      }
+      hero.spinTowards(d)
+        
     } 
     
   }
