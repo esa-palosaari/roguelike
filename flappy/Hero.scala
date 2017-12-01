@@ -10,6 +10,7 @@ import os1.grid._
 import scala.collection.mutable._
 import math._
 
+import s1._
 
 /**
  * @author jlohikos
@@ -21,15 +22,22 @@ import math._
  * 
  * Look from RobotBody how to move Hero and other stuff.
  */
-class Hero(visibleRadius: Int, world: RobotWorld, initialLocation: Coords, initialFacing: Direction) 
+class Hero(visibleRadius: Int, world: RobotWorld, initialLocation: Coords, initialFacing: os1.grid.Direction) 
   extends RobotBody(world, initialLocation, initialFacing) {
 	
   var radius = visibleRadius;
-  var heroPic = None //  circle(20, Red)
-	
+    
+  val heroPic2 = circle(20, Green)
+  val heroPic3 = circle(20, LightGray)
+  val heroPics = Array(heroPic2, heroPic3)
+  var pind = 1  // index of current picture of hero
+  var pic = heroPics(pind) //  circle(20, Green)
+
+	val animationSpeed = 20  // every 6th model update.
+  
   // returns the direction (wrapped in Some) from monster to hero 
   // May be None if the hero cannot see the monster.
-	def visibilityToMonster(loc: Coords): Option[Direction] = {
+	def visibilityToMonster(loc: Coords): Option[os1.grid.Direction] = {
 	// Checks if block-distance (Manhattan) is less than equal to radius. If not => return None
 	// Check if there is object blocking visibility in between. If yes => None
 	// return direction (the closest of 4 or 8) to the hero
