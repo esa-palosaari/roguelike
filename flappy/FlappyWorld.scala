@@ -82,7 +82,7 @@ object FlappyWorld extends App {
     val start = getRandomEmptyTile(rand)
     hero.place(floor, start._2)
     
-    monsterOne = new Monster("one", floor.addRobot(getRandomEmptyTile(new Random())._2, North), hero)
+    monsterOne = new Monster("one", floor.addRobot(getRandomEmptyTile(new Random())._2, North), hero, pathfinder)
     monsterOne.body.brain = Some(monsterOne)
     
     floor_pic = makeBackground()
@@ -105,8 +105,6 @@ object FlappyWorld extends App {
    * listening to key presses and mouse movements and most importantly, drawing
    * Flappy. (or whatever the model depicts) 
    */
-  
-  var path: Option[Queue[os1.grid.Direction]] = None
   
   val view = new s1.gui.mutable.View(Flappy) {
     // Let's store the model into 'bird' for more clarity
@@ -153,26 +151,7 @@ object FlappyWorld extends App {
       if(hero.facing == NoDirection){
         hero.neighboringSquare(d) match {
           case _: Stairs => createNewFloor()
-          case _ => {
-            path match{
-              case None => {
-                val tile = getRandomEmptyTile(rand)
-                val exit_location = floor.allElementsIndexes.find(p => p._1 match{
-                  case _: Stairs => true
-                  case _ => false
-                }).get._2
-                val pt = pathfinder.findPath(hero.location, exit_location)
-                d = pt.dequeue()
-                path = Some(pt)
-              }
-              case Some(q) => {
-                d = q.dequeue()
-                if(q.isEmpty){
-                  path = None
-                }
-              }
-            }
-          }
+          case _ => Unit
         }
       }
       
