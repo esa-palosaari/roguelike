@@ -28,11 +28,11 @@ object FlappyWorld extends App {
     return new Pos(x * tileSize - tileSize/2, y * tileSize - tileSize/2)
   }
   
-  val wallPic = rectangle(tileSize, tileSize, Red)
-  val stairsPic = rectangle(tileSize, tileSize, Yellow)
+  val wallPic = rectangle(tileSize, tileSize, LightGray)
+  val stairsPic = rectangle(tileSize, tileSize, Gray)
   val monsterPic = circle(20, Brown)
   
-  def makeBackground() = rectangle(width, height, Blue)
+  def makeBackground() = rectangle(width, height, Black)
     
   /* The data model used by the game - You will need to extend this
    * with at least 3 obstacles, but you are free to take it as much further you
@@ -118,6 +118,11 @@ object FlappyWorld extends App {
       if(monsterOne.body.isBroken)
         println("monster crashed: " + monsterOne.body.isBroken)
       pic.place(hero.pic, coords2Pos(hero.location)).place(monsterPic, coords2Pos(monsterOne.location))
+      
+      //health bar (replace max_hp and current_hp with the correct values from hero object)
+      val max_hp = 50
+      val current_hp = 40
+      pic.place(rectangle(128, 16, Red), new Pos(width / 2, 12)).place(rectangle((128 * current_hp) / max_hp, 16, Green), new Pos(width / 2, 12))
     }
     
     // And whenever cursor key is pressed we make it move
