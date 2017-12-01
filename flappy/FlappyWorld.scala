@@ -19,6 +19,9 @@ object FlappyWorld extends App {
   val floorWidth = 24
   val floorHeight = 16
   
+  // set the number of monsters here
+  val monsterNumber = 3
+  
   val height = tileSize * (floorHeight + 2)
   val width = tileSize * (floorWidth + 2)
 
@@ -56,12 +59,11 @@ object FlappyWorld extends App {
   
   // using null pointers here is not good, but it's too late to change everything now.
   var monsters = new ArrayBuffer[Monster]()
-  for(i <- 0 until 2) {
+  // s
+  for(i <- 0 until monsterNumber) {
     monsters += null
   }
-//  var monsterThree: Monster = null 
-//  var monsterFour: Monster = null 
-//  var monsterFive: Monster = null 
+
   
   //world generation stuff
   var floor: RobotWorld = null
@@ -124,29 +126,14 @@ object FlappyWorld extends App {
     def makePic() = {
       var pic = floor_pic
       
-      // placing hero and monsters to the pic
-      if(monsters.filter(!_.body.isBroken).length == 0) {
-        pic = pic.place(hero.pic, coords2Pos(hero.location))
-      } else if (monsters.filter(!_.body.isBroken).length == 1) {
-        var x: Monster = null
-        for (i <- 0 until monsters.length) {
-          if(!monsters(i).body.isBroken) {
-            x = monsters(i)
-          }
+      // placing hero and monsters to the pic     
+     
+      for(i <- 0 until monsters.length) {
+        if(!monsters(i).body.isBroken) {
+          pic = pic.place(monsterPic, coords2Pos(monsters(i).location))
         }
-        pic = pic.place(hero.pic, coords2Pos(hero.location)).place(monsterPic, coords2Pos(x.location))
-      } else if (monsters.filter(!_.body.isBroken).length == 2) {
-        var x1: Monster = null
-        var x2: Monster = null
-        for (i <- 0 until monsters.length) {
-          if(!monsters(i).body.isBroken && x1 == null) {
-            x1 = monsters(i)
-          } else if (!monsters(i).body.isBroken) {
-            x2 = monsters(i)
-          }
-        }
-        pic = pic.place(hero.pic, coords2Pos(hero.location)).place(monsterPic, coords2Pos(x1.location)).place(monsterPic, coords2Pos(x2.location))
       }
+      pic = pic.place(hero.pic, coords2Pos(hero.location))
       
       
      if(hero.currentHealthPoints <= 0) {
