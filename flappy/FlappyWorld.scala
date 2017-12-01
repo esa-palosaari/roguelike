@@ -45,7 +45,7 @@ object FlappyWorld extends App {
   }
   
   var hero = new Hero(4, null, null, North)
-  var monsterOne: Monster = null // new Monster("one", null, hero)
+  var monsterOne: Monster = null 
   
   
   //world generation stuff
@@ -135,7 +135,7 @@ object FlappyWorld extends App {
       
       if(hero.canMoveTowards(d)) {
         hero.moveTowards(d)
-        monsterOne.moveBody
+        monsterOne.body.takeTurn()
       }
         
       if(hero.facing == NoDirection){
