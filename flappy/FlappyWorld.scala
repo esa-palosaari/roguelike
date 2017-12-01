@@ -105,6 +105,7 @@ object FlappyWorld extends App {
       var pic = floor_pic
       println("hero: " + coords2Pos(hero.location))
       println("monster: " + coords2Pos(monsterOne.location))
+      println("monster crashed: " + monsterOne.body.isBroken)
       pic.place(heroPic2, coords2Pos(hero.location)).place(monsterPic, coords2Pos(monsterOne.location))
       //pic.place(monsterPic, coords2Pos(monsterOne.location))
     }
