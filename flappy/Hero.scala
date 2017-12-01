@@ -14,7 +14,6 @@ import scala.util.Random
 import s1._
 
 /**
- * @author jlohikos
  * 
  * @param world            the world inhabited by the hero
  * @param initialLocation  the initial location of the hero in its world

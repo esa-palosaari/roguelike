@@ -111,7 +111,7 @@ object FlappyWorld extends App {
   
   /** This view is responsible for updating the model at static intervals,
    * listening to key presses and mouse movements and most importantly, drawing
-   * Flappy. (or whatever the model depicts) 
+   * Hero. (or whatever the model depicts) 
    */
   
   val view = new s1.gui.mutable.View(Flappy) {
