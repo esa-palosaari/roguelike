@@ -105,7 +105,7 @@ class Floor extends Square {
     * @return `true` if `arrivee` was successfully placed in the square, `false` if a collision occurred */
  def addRobot(arrivee: RobotBody) = {
    if(!this.occupant.isEmpty) {
-     this.occupant.foreach(_.destroy())
+     //this.occupant.foreach(_.destroy())
      false
    } else {
      this.occupant = Some(arrivee)

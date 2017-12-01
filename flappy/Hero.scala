@@ -60,7 +60,7 @@ class Hero(visibleRadius: Int, initialLocation: Coords, initialFacing: os1.grid.
   def fight(monster: RobotBody) = {
     val r = new Random()
     monster.currentHealthPoints -= r.nextInt(monster.maxHealthPoints)
-    this.currentHealthPoints -= r.nextInt(10)
+    this.currentHealthPoints -= r.nextInt(5)
   }
   
 }

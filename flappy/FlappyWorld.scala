@@ -112,14 +112,15 @@ object FlappyWorld extends App {
     def makePic() = {
       var pic = floor_pic
 
-      if(monsterOne.body.isBroken)
-        println("monster crashed: " + monsterOne.body.isBroken)
-      pic = pic.place(hero.pic, coords2Pos(hero.location)).place(monsterPic, coords2Pos(monsterOne.location))
-      
+      if(!monsterOne.body.isBroken) {
+        pic = pic.place(hero.pic, coords2Pos(hero.location)).place(monsterPic, coords2Pos(monsterOne.location))
+      } else {
+        pic = pic.place(hero.pic, coords2Pos(hero.location))
+      }
       //health bar (replace max_hp and current_hp with the correct values from hero object)
       val max_hp = hero.maxHealthPoints
       val current_hp = hero.currentHealthPoints
-      pic.place(rectangle(128, 16, Red), new Pos(width / 2, 12)).place(rectangle((128 * current_hp) / max_hp, 16, Green), new Pos(width / 2, 12))
+      pic.place(rectangle(128, 16, Red), new Pos(width / 2, 12)).place(rectangle(Math.max((128 * current_hp) / max_hp, 1), 16, Green), new Pos(width / 2, 12))
     }
     
     // And whenever cursor key is pressed we make it move
@@ -155,14 +156,21 @@ object FlappyWorld extends App {
         }
       }
       
+      // monsters move after the hero has moved
       if(hero.canMoveTowards(d)){
         hero.moveTowards(d)
         if(hero.neighboringSquare(d).robot.isDefined) {
           hero.fight(hero.neighboringSquare(d).robot.get)
         }
+        if(hero.currentHealthPoints <= 0) stop()  // Game over
+        
         monsterOne.body.takeTurn
-        if(monsterOne.body.neighboringSquare(monsterOne.body.facing).robot.contains(hero)) {
+        if(!monsterOne.body.isBroken && monsterOne.body.neighboringSquare(monsterOne.body.facing).robot.contains(hero)) {
           monsterOne.fight
+        }
+        if(monsterOne.body.currentHealthPoints <= 0) {
+          monsterOne.body.destroy
+          monsterOne.body.locationSquare.clear
         }
       }
     } 
