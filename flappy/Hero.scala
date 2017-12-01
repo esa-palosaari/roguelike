@@ -33,7 +33,7 @@ class Hero(visibleRadius: Int, world: RobotWorld, initialLocation: Coords, initi
   var pind = 1  // index of current picture of hero
   var pic = heroPics(pind) //  circle(20, Green)
 
-	val animationSpeed = 20  // every 6th model update.
+	val animationSpeed = 20  // every N th model update.
   
   // returns the direction (wrapped in Some) from monster to hero 
   // May be None if the hero cannot see the monster.
@@ -41,7 +41,8 @@ class Hero(visibleRadius: Int, world: RobotWorld, initialLocation: Coords, initi
 	// Checks if block-distance (Manhattan) is less than equal to radius. If not => return None
 	// Check if there is object blocking visibility in between. If yes => None
 	// return direction (the closest of 4 or 8) to the hero
-	  val distance = blockdistance(location, loc)
+    val distance = distance8ways(location,loc)
+	  // val distance = blockdistance(location, loc)
 	  if (distance > radius) 
 	    return None
 	  val dy = location.y - loc.y
@@ -72,7 +73,7 @@ class Hero(visibleRadius: Int, world: RobotWorld, initialLocation: Coords, initi
   	  x <- lx-radius/2 to lx+radius/2 + 1
   	} {
   	  var loc2 = new Coords(x,y)
-  	  if (blockdistance(location, loc2) <= visibleRadius)
+  	  if (distance8ways(location, loc2) <= visibleRadius)
   	    squares.+=(loc2)
   	}
   	return Some(squares)
@@ -83,6 +84,11 @@ class Hero(visibleRadius: Int, world: RobotWorld, initialLocation: Coords, initi
 	def blockdistance(loc1: Coords, loc2: Coords): Int = {
 	  return abs(loc1.y - loc2.y) + abs(loc1.x - loc2.x)
 	  }
-}
 
+  def distance8ways(loc1: Coords, loc2: Coords): Int = {
+    return (0.5 + math.sqrt(math.pow(abs(loc1.y - loc2.y), 2) + math.pow(abs(loc1.x - loc2.x), 2))).toInt
+  }
+  
+}
+ 
 
