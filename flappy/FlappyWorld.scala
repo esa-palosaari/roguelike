@@ -117,8 +117,8 @@ object FlappyWorld extends App {
       pic = pic.place(hero.pic, coords2Pos(hero.location)).place(monsterPic, coords2Pos(monsterOne.location))
       
       //health bar (replace max_hp and current_hp with the correct values from hero object)
-      val max_hp = 50
-      val current_hp = 40
+      val max_hp = hero.maxHealthPoints
+      val current_hp = hero.currentHealthPoints
       pic.place(rectangle(128, 16, Red), new Pos(width / 2, 12)).place(rectangle((128 * current_hp) / max_hp, 16, Green), new Pos(width / 2, 12))
     }
     
