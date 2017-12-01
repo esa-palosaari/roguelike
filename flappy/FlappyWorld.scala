@@ -30,6 +30,7 @@ object FlappyWorld extends App {
   
   val wallPic = rectangle(tileSize, tileSize, Red)
   val stairsPic = rectangle(tileSize, tileSize, Yellow)
+  val monsterPic = circle(20, Brown)
   
   def makeBackground() = rectangle(width, height, Blue)
     
@@ -52,7 +53,8 @@ object FlappyWorld extends App {
     }
   }
   
-  var hero = new Hero(4, null, null, North)
+  var hero = new Hero(4, null, North)
+  var monsterOne: Monster = null 
   
   //world generation stuff
   var floor: RobotWorld = null
@@ -79,6 +81,9 @@ object FlappyWorld extends App {
     val start = getRandomEmptyTile(rand)
     hero.place(floor, start._2)
     
+    monsterOne = new Monster("one", floor.addRobot(getRandomEmptyTile(new Random())._2, North), hero, pathfinder)
+    monsterOne.body.brain = Some(monsterOne)
+
     floor_pic = makeBackground()
     for(tile <- floor.allElementsIndexes){
       tile._1 match{
@@ -97,10 +102,8 @@ object FlappyWorld extends App {
   
   /** This view is responsible for updating the model at static intervals,
    * listening to key presses and mouse movements and most importantly, drawing
-   * Flappy. (or whatever the model depicts) 
+   * Hero. (or whatever the model depicts) 
    */
-  
-  var path: Option[Queue[os1.grid.Direction]] = None
   
   val view = new s1.gui.mutable.View(Flappy) {
     // Let's store the model into 'bird' for more clarity
@@ -111,7 +114,10 @@ object FlappyWorld extends App {
     
     def makePic() = {
       var pic = floor_pic
-      pic.place(hero.pic, coords2Pos(hero.location))  
+
+      if(monsterOne.body.isBroken)
+        println("monster crashed: " + monsterOne.body.isBroken)
+      pic.place(hero.pic, coords2Pos(hero.location)).place(monsterPic, coords2Pos(monsterOne.location))
     }
     
     // And whenever cursor key is pressed we make it move
@@ -138,36 +144,19 @@ object FlappyWorld extends App {
       }
       hero.spinTowards(d)
       
-      println("DEBUG:", hero.neighboringSquare(d)) // DEBUG
+      //println("DEBUG:", hero.neighboringSquare(d)) // DEBUG
         
       if(hero.facing == NoDirection){
         hero.neighboringSquare(d) match {
           case _: Stairs => createNewFloor()
-          case _ => {
-            path match{
-              case None => {
-                val tile = getRandomEmptyTile(rand)
-                val exit_location = floor.allElementsIndexes.find(p => p._1 match{
-                  case _: Stairs => true
-                  case _ => false
-                }).get._2
-                val pt = pathfinder.findPath(hero.location, exit_location)
-                d = pt.dequeue()
-                path = Some(pt)
-              }
-              case Some(q) => {
-                d = q.dequeue()
-                if(q.isEmpty){
-                  path = None
-                }
-              }
-            }
-          }
+          case _ => Unit
         }
       }
       
-      if(hero.canMoveTowards(d))
+      if(hero.canMoveTowards(d)){
         hero.moveTowards(d)
+        monsterOne.body.takeTurn()
+      }
     } 
     
   }
