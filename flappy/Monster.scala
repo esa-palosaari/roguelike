@@ -13,8 +13,9 @@ class Monster (name: String, body: RobotBody, val hero: Hero, val pathFinder: Pa
   def moveBody = {
     // if hero is visible move towards and attack
     
-    if(hero.visibleFrom(this.body.location)){
-      println("visible")
+    val hero_visible = hero.visibleFrom(this.body.location)
+    
+    if(hero_visible){
       if(hero.location != target){
         this.path = pathFinder.findPath(this.location, hero.location)
       }
@@ -28,11 +29,23 @@ class Monster (name: String, body: RobotBody, val hero: Hero, val pathFinder: Pa
           if(p.isEmpty){
             this.path = None
           }
+        }else{
+          fight()
         }
       }
       case None => Unit
     }
 
+  }
+  
+  def walkToLocation(coords: Coords) = {
+    this.path = pathFinder.findPath(this.location, coords)
+  }
+  
+  def fight() = {
+    //Fight
+    //notice hero was passed to monsters constructor
+    Unit
   }
   
 }
