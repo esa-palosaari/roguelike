@@ -6,6 +6,7 @@ import os1.grid._
 import scala.swing.event.Key
 import scala.util.Random
 import scala.collection.mutable.Queue
+import scala.collection.mutable.ArrayBuffer
 
 object FlappyWorld extends App {
   
@@ -52,8 +53,12 @@ object FlappyWorld extends App {
   }
   
   var hero = new Hero(4, null, North)
-  var monsterOne: Monster = null 
-  var monsterTwo: Monster = null 
+  
+  // using null pointers here is not good, but it's too late to change everything now.
+  var monsters = new ArrayBuffer[Monster]()
+  for(i <- 0 until 2) {
+    monsters += null
+  }
 //  var monsterThree: Monster = null 
 //  var monsterFour: Monster = null 
 //  var monsterFive: Monster = null 
@@ -83,11 +88,10 @@ object FlappyWorld extends App {
     val start = getRandomEmptyTile(rand)
     hero.place(floor, start._2)
     
-    monsterOne = new Monster("one", floor.addRobot(getRandomEmptyTile(new Random())._2, North), hero, pathfinder)
-    monsterOne.body.brain = Some(monsterOne)
-    
-        monsterOne = new Monster("one", floor.addRobot(getRandomEmptyTile(new Random())._2, North), hero, pathfinder)
-    monsterOne.body.brain = Some(monsterOne)
+    for (i <- 0 until monsters.length) {
+      monsters(i) = new Monster("Baddie", floor.addRobot(getRandomEmptyTile(new Random())._2, North), hero, pathfinder)
+      monsters(i).body.brain = Some(monsters(i))
+    }
 
     floor_pic = makeBackground()
     for(tile <- floor.allElementsIndexes){
@@ -120,13 +124,30 @@ object FlappyWorld extends App {
     def makePic() = {
       var pic = floor_pic
       
-
-
-      if(!monsterOne.body.isBroken) {
-        pic = pic.place(hero.pic, coords2Pos(hero.location)).place(monsterPic, coords2Pos(monsterOne.location))
-      } else {
+      // placing hero and monsters to the pic
+      if(monsters.filter(!_.body.isBroken).length == 0) {
         pic = pic.place(hero.pic, coords2Pos(hero.location))
+      } else if (monsters.filter(!_.body.isBroken).length == 1) {
+        var x: Monster = null
+        for (i <- 0 until monsters.length) {
+          if(!monsters(i).body.isBroken) {
+            x = monsters(i)
+          }
+        }
+        pic = pic.place(hero.pic, coords2Pos(hero.location)).place(monsterPic, coords2Pos(x.location))
+      } else if (monsters.filter(!_.body.isBroken).length == 2) {
+        var x1: Monster = null
+        var x2: Monster = null
+        for (i <- 0 until monsters.length) {
+          if(!monsters(i).body.isBroken && x1 == null) {
+            x1 = monsters(i)
+          } else if (!monsters(i).body.isBroken) {
+            x2 = monsters(i)
+          }
+        }
+        pic = pic.place(hero.pic, coords2Pos(hero.location)).place(monsterPic, coords2Pos(x1.location)).place(monsterPic, coords2Pos(x2.location))
       }
+      
       
      if(hero.currentHealthPoints <= 0) {
         pic = gameOver
@@ -179,14 +200,10 @@ object FlappyWorld extends App {
         if(hero.neighboringSquare(d).robot.isDefined) {
           hero.fight(hero.neighboringSquare(d).robot.get)
         }
-        monsterOne.body.takeTurn
-        if(!monsterOne.body.isBroken && monsterOne.body.neighboringSquare(monsterOne.body.facing).robot.contains(hero)) {
-          monsterOne.fight
-        }
-        if(monsterOne.body.currentHealthPoints <= 0) {
-          monsterOne.body.destroy
-          monsterOne.body.locationSquare.clear
-        }
+        monsters.filter(!_.body.isBroken).map(_.body.takeTurn)
+        monsters.filter(x => !x.body.isBroken && x.body.neighboringSquare(x.body.facing).robot.contains(hero)).map(_.fight)
+        monsters.filter(x => !x.body.isBroken && x.body.currentHealthPoints <= 0).map(x => x.body.locationSquare.clear)
+        monsters.filter(x => !x.body.isBroken && x.body.currentHealthPoints <= 0).map(x => x.body.destroy)
       }
     } 
     
