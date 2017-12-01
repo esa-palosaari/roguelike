@@ -54,6 +54,7 @@ class Hero(visibleRadius: Int, initialLocation: Coords, initialFacing: os1.grid.
     }
     true
   }
+  def fight(monster: RobotBody) = ???
   
 }
  

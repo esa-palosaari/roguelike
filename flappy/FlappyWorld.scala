@@ -160,6 +160,9 @@ object FlappyWorld extends App {
       
       if(hero.canMoveTowards(d)){
         hero.moveTowards(d)
+        if(hero.neighboringSquare(d).robot.isDefined) {
+          hero.fight(hero.neighboringSquare(d).robot.get)
+        }
         monsterOne.body.takeTurn()
       }
     } 
