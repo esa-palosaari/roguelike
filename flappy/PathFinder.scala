@@ -9,7 +9,7 @@ class HelperGrid(width: Int, height: Int) extends Grid[Direction](width, height)
 
 class PathFinder(world: RobotWorld) {
   
-  def findPath(from: Coords, to: Coords) = {
+  def findPath(from: Coords, to: Coords): Option[Queue[Direction]] = {
     val helperGrid = new HelperGrid(world.width, world.height)
     
     helperGrid.update(to, NoDirection)
@@ -20,6 +20,9 @@ class PathFinder(world: RobotWorld) {
     
     var done = false
     while(!done){
+      if(searchList.isEmpty){
+        return None
+      }
       val elem = searchList.dequeue()
       val new_elems = helperGrid.neighborsIndexes(elem, true).filter(_._1 == null).map(_._2)
       for(e <- new_elems){
@@ -40,6 +43,6 @@ class PathFinder(world: RobotWorld) {
       res += helperGrid(coord)
       coord = coord.neighbor(helperGrid(coord))
     }
-    res
+    Some(res)
   }
 }
