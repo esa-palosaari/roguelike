@@ -43,9 +43,7 @@ class Monster (name: String, body: RobotBody, val hero: Hero, val pathFinder: Pa
   }
   
   def fight() = {
-    //Fight
-    //notice hero was passed to monsters constructor
-    Unit
+    ???
   }
   
 }

@@ -9,6 +9,7 @@ import os1.monsters._
 import os1.grid._
 import scala.collection.mutable._
 import math._
+import scala.util.Random
 
 import s1._
 
@@ -32,6 +33,8 @@ class Hero(visibleRadius: Int, initialLocation: Coords, initialFacing: os1.grid.
   val heroPics = Array(heroPic2, heroPic3)
   var pind = 1  // index of current picture of hero
   var pic = heroPics(pind) //  circle(20, Green)
+  this.maxHealthPoints = 50
+  this.currentHealthPoints = maxHealthPoints
 
 	val animationSpeed = 20  // every N th model update.
   
@@ -54,7 +57,11 @@ class Hero(visibleRadius: Int, initialLocation: Coords, initialFacing: os1.grid.
     }
     true
   }
-  def fight(monster: RobotBody) = ???
+  def fight(monster: RobotBody) = {
+    val r = new Random()
+    monster.currentHealthPoints -= r.nextInt(monster.maxHealthPoints)
+    this.currentHealthPoints -= r.nextInt(10)
+  }
   
 }
  

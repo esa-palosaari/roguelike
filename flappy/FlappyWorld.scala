@@ -46,11 +46,8 @@ object FlappyWorld extends App {
         hero.pind = (hero.pind + 1) % hero.heroPics.length
         hero.pic = hero.heroPics(hero.pind)
       }
-
       
-      
-    // TODO ****************  MOnsters here keep moving all the time towards hero (see Hero.visibilityToMonster)
-    }
+     }
   }
   
   var hero = new Hero(4, null, North)
@@ -163,7 +160,10 @@ object FlappyWorld extends App {
         if(hero.neighboringSquare(d).robot.isDefined) {
           hero.fight(hero.neighboringSquare(d).robot.get)
         }
-        monsterOne.body.takeTurn()
+        monsterOne.body.takeTurn
+        if(monsterOne.body.neighboringSquare(monsterOne.body.facing).robot.contains(hero)) {
+          monsterOne.fight
+        }
       }
     } 
     

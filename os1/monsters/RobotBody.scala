@@ -37,6 +37,8 @@ class RobotBody(initialWorld: RobotWorld, initialLocation: Coords, initialFacing
   private var coordinates = initialLocation         // gatherer: changes in relation to the old location
   private var isIntact = true                       // flag: can be broken or repaired
   private var facesTowards = initialFacing          // most-recent holder (can be changed arbitrarily)
+  var maxHealthPoints = 10
+  var currentHealthPoints = maxHealthPoints
   
   def place(onto: Coords) = {
     this.coordinates = onto
