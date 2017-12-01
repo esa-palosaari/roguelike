@@ -10,6 +10,7 @@ object FlappyWorld extends App {
   
   val rand = new Random()
 
+  var timerCnt = 0   // increased +1 every time model is updated.
   /* Size of the game area */
   val tileSize = 24
   
@@ -18,15 +19,14 @@ object FlappyWorld extends App {
   
   val height = tileSize * (floorHeight + 2)
   val width = tileSize * (floorWidth + 2)
-  
+
+  // Convert Coords coordinates to Pos-coordinates.  
   def coords2Pos(coords: Coords): Pos = {
     val x = coords.x + 1
     val y = coords.y + 1
     return new Pos(x * tileSize - tileSize/2, y * tileSize - tileSize/2)
   }
   
-  //val background = rectangle(width, height, Blue)
-  val heroPic2 = circle(20, Green)
   val wallPic = rectangle(tileSize, tileSize, Red)
   val stairsPic = rectangle(tileSize, tileSize, Yellow)
   
@@ -39,6 +39,14 @@ object FlappyWorld extends App {
     
     /* Each time the model is updated ...*/
     def act()={
+      timerCnt = (timerCnt + 1 ) % hero.animationSpeed // Speed of animation
+      if (timerCnt == 0) {
+        hero.pind = (hero.pind + 1) % 2
+        hero.pic = hero.heroPics(hero.pind)
+      }
+
+      
+      
     // TODO ****************  MOnsters here keep moving all the time towards hero (see Hero.visibilityToMonster)
     }
   }
@@ -97,10 +105,10 @@ object FlappyWorld extends App {
     
     def makePic() = {
       var pic = floor_pic
-      pic.place(heroPic2, coords2Pos(hero.location))  
+      pic.place(hero.pic, coords2Pos(hero.location))  
     }
     
-    // And whenever any key is pressed we make it move
+    // And whenever cursor key is pressed we make it move
     override def onKeyUp(key: Key) = {
       // bird.jump()
       var d : os1.grid.Direction = key match {
