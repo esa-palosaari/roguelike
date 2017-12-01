@@ -114,3 +114,7 @@ class Floor extends Square {
  }
 
 }
+
+class Stairs extends Floor{
+  //nop
+}

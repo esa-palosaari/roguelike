@@ -29,17 +29,27 @@ import os1.grid._
   *
   * @see [[RobotWorld]]
   * @see [[RobotBrain]] */
-class RobotBody(val world: RobotWorld, initialLocation: Coords, initialFacing: Direction) { 
+class RobotBody(initialWorld: RobotWorld, initialLocation: Coords, initialFacing: Direction) { 
   
   /** the robot's brain (if it has one) */ 
   var brain: Option[RobotBrain] = None              // most-recent holder (it is possible for robot to change brains, but this is only done in Chapter 12.1)
+  private var currentWorld = initialWorld
   private var coordinates = initialLocation         // gatherer: changes in relation to the old location
   private var isIntact = true                       // flag: can be broken or repaired
   private var facesTowards = initialFacing          // most-recent holder (can be changed arbitrarily)
   
+  def place(onto: Coords) = {
+    this.coordinates = onto
+  }
+  def place(ontoWorld: RobotWorld, onto: Coords) = {
+    this.currentWorld = ontoWorld
+    this.coordinates = onto
+  }
   
   /** Returns the coordinates that indicate the robot's current location in the robot world. */
   def location = this.coordinates
+  
+  def world = this.currentWorld
 
   
   /** Returns the square the robot is currently in. */

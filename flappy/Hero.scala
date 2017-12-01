@@ -51,7 +51,7 @@ class Hero(visibleRadius: Int, world: RobotWorld, initialLocation: Coords, initi
 	}
 	// returns a buffer of coordinates visible to the hero
 	// May return None, if hero has gone blind or it is clowdy midnight.
-	def visibleSquares: Option[ListBuffer[Coords]] = {		
+	def visibleSquares: Option[ListBuffer[Coords]] = {
   	// Get a block with width=2*visibleRadius and height=2*radius.
   	// Check all grid coords in the block, if they are inside radius.
   	// https://en.wikipedia.org/wiki/Taxicab_geometry

@@ -4,8 +4,11 @@ import s1._
 import os1.monsters._
 import os1.grid._
 import scala.swing.event.Key
+import scala.util.Random
 
 object FlappyWorld extends App {
+  
+  val rand = new Random()
 
   /* Size of the game area */
   val tileSize = 24
@@ -16,10 +19,6 @@ object FlappyWorld extends App {
   val height = tileSize * (floorHeight + 2)
   val width = tileSize * (floorWidth + 2)
   
-  /* Image of Flappy and her background */
-  
-  
-  
   def coords2Pos(coords: Coords): Pos = {
     val x = coords.x + 1
     val y = coords.y + 1
@@ -29,6 +28,7 @@ object FlappyWorld extends App {
   //val background = rectangle(width, height, Blue)
   val heroPic2 = circle(20, Green)
   val wallPic = rectangle(tileSize, tileSize, Red)
+  val stairsPic = rectangle(tileSize, tileSize, Yellow)
   
   def makeBackground() = rectangle(width, height, Blue)
     
@@ -42,20 +42,46 @@ object FlappyWorld extends App {
     // TODO ****************  MOnsters here keep moving all the time towards hero (see Hero.visibilityToMonster)
     }
   }
-
-  //var floor = new RobotWorld(floorWidth, floorHeight)
-  var floor = WorldGenerator.default(floorWidth, floorHeight, 2)
+  
+  var hero = new Hero(4, null, null, North)
+  
+  //world generation stuff
+  var floor: RobotWorld = null
   var floor_pic = makeBackground()
-  for(tile <- floor.allElementsIndexes) {
-    tile._1 match{
-      case Wall => {
-        floor_pic = wallPic.onto(floor_pic, new Pos(tile._2.x * tileSize + tileSize / 2, tile._2.y * tileSize + tileSize / 2))
+  
+  def getRandomEmptyTile(rn: Random): (Square, Coords) = {
+    var ret: (Square, Coords) = null
+    while(ret == null){
+      val (x, y) = (rn.nextInt(floorWidth), rn.nextInt(floorHeight))
+      val elem = floor.elementAt(Coords(x, y))
+      if(elem.isEmpty){
+        ret = (elem, Coords(x, y))
       }
-      case _ => Unit
+    }
+    ret
+  }
+  
+  def createNewFloor(): Unit = {
+    floor = WorldGenerator.default(floorWidth, floorHeight, rand)
+    
+    val start = getRandomEmptyTile(rand)
+    hero.place(floor, start._2)
+    
+    floor_pic = makeBackground()
+    for(tile <- floor.allElementsIndexes){
+      tile._1 match{
+        case _: Stairs => {
+          floor_pic = stairsPic.onto(floor_pic, new Pos(tile._2.x * tileSize + tileSize / 2, tile._2.y * tileSize + tileSize / 2))
+        }
+        case Wall => {
+          floor_pic = wallPic.onto(floor_pic, new Pos(tile._2.x * tileSize + tileSize / 2, tile._2.y * tileSize + tileSize / 2))
+        }
+        case _ => Unit
+      }
     }
   }
-
-  var hero = new Hero(4, floor, new Coords(5, 5), North)
+  
+  createNewFloor()
   
   /** This view is responsible for updating the model at static intervals,
    * listening to key presses and mouse movements and most importantly, drawing
@@ -82,6 +108,17 @@ object FlappyWorld extends App {
         case Key.Down => South
         case Key.Right => East
         case Key.Left => West
+        
+        case Key.Numpad1 => SouthWest
+        case Key.Numpad2 => South
+        case Key.Numpad3 => SouthEast
+        case Key.Numpad4 => West
+        case Key.Numpad5 => NoDirection
+        case Key.Numpad6 => East
+        case Key.Numpad7 => NorthWest
+        case Key.Numpad8 => North
+        case Key.Numpad9 => NorthEast
+        
         case _ => hero.facing
       }
       hero.spinTowards(d)

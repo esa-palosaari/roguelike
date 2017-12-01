@@ -9,7 +9,7 @@ import scala.collection.mutable.ArrayBuffer
 
 object WorldGenerator {
   
-  def default(width: Int, height: Int, seed: Int) = {
+  def default(width: Int, height: Int,  rand: Random) = {
     
     val world = new RobotWorld(width, height)
     
@@ -17,8 +17,6 @@ object WorldGenerator {
     
     var current_cover = width * height
     val target_cover = current_cover / 2
-    
-    val rand = new Random(seed)
     
     //place a bunch of rooms
     var rooms = ArrayBuffer[Box]()
@@ -99,6 +97,16 @@ object WorldGenerator {
         world.removeWalls(Box(point2, point3))
         
         room_sets(set_id(i)) = set_id(j)
+      }
+    }
+    
+    //place a set of stairs somewhere.
+    var exit_placed = false
+    while(!exit_placed){
+      val (x, y) = (rand.nextInt(width) + 1, rand.nextInt(height) + 1)
+      if(world.elementAt(Coords(x, y)).isEmpty){
+        world.addStairs(Coords(x, y))
+        exit_placed = true
       }
     }
     

@@ -39,6 +39,13 @@ case object South extends Direction( 0, 1)
 /** This immutable singleton object represents the westwardly compass direction. It is one of the four predefined instances of class `Direction`. */
 case object West  extends Direction(-1, 0)
 
+case object NorthWest extends Direction(-1, -1)
+case object NorthEast extends Direction(1, -1)
+case object SouthWest extends Direction(-1, 1)
+case object SouthEast extends Direction(1, 1)
+
+case object NoDirection extends Direction(0, 0)
+
 
 /** This companion object of class `Direction` provides a couple of useful constants related to directions.
   *
