@@ -14,6 +14,7 @@ class Monster (name: String, body: RobotBody, val hero: Hero, val pathFinder: Pa
     // if hero is visible move towards and attack
     
     if(hero.visibleFrom(this.body.location)){
+      println("visible")
       if(hero.location != target){
         this.path = pathFinder.findPath(this.location, hero.location)
       }
@@ -21,11 +22,13 @@ class Monster (name: String, body: RobotBody, val hero: Hero, val pathFinder: Pa
     
     this.path match{
       case Some(p) => {
-        val d = p.dequeue()
-        if(p.isEmpty){
-          this.path = None
+        val d = p.front
+        if(body.moveTowards(d)){
+          p.dequeue()
+          if(p.isEmpty){
+            this.path = None
+          }
         }
-        body.moveTowards(d)
       }
       case None => Unit
     }
