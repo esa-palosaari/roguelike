@@ -32,6 +32,9 @@ class Coords(val x: Int, val y: Int) {
     * and a `y` of 21. Calling this method is essentially the same as calling `relative` 
     * with a `distance` of one. */
   def neighbor(direction: Direction) = this.relative(direction, 1)
+  
+  
+  def direction(other: Coords) = Direction(other.x - this.x, other.y - this.y)
 
   
   /** Determines whether this pair of coordinates equals the given one. This is the case 
@@ -43,10 +46,15 @@ class Coords(val x: Int, val y: Int) {
   /** Returns a textual description of this pair of coordinates. The description is of the form `"(x,y)"`. */
   override def toString = "(" + this.x + "," + this.y + ")"
     
-  
+  override def equals(that: Any) = that match{
+    case Coords(x, y) => this.x == x && this.y == y
+    case _ => false
+  }
 }
 
 object Coords{
   
   def apply(x: Int, y: Int) = new Coords(x, y)
+  
+  def unapply(c: Coords) = Some(c.x, c.y)
 }
