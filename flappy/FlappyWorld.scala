@@ -111,6 +111,11 @@ object FlappyWorld extends App {
     
     def makePic() = {
       var pic = floor_pic
+      
+      if(hero.currentHealthPoints <= 0) {
+        pic
+        stop()
+      }
 
       if(!monsterOne.body.isBroken) {
         pic = pic.place(hero.pic, coords2Pos(hero.location)).place(monsterPic, coords2Pos(monsterOne.location))
@@ -162,7 +167,10 @@ object FlappyWorld extends App {
         if(hero.neighboringSquare(d).robot.isDefined) {
           hero.fight(hero.neighboringSquare(d).robot.get)
         }
-        if(hero.currentHealthPoints <= 0) stop()  // Game over
+        if(hero.currentHealthPoints <= 0) {
+         
+          stop()  // Game over
+        }
         
         monsterOne.body.takeTurn
         if(!monsterOne.body.isBroken && monsterOne.body.neighboringSquare(monsterOne.body.facing).robot.contains(hero)) {
