@@ -117,7 +117,7 @@ object FlappyWorld extends App {
 
       if(monsterOne.body.isBroken)
         println("monster crashed: " + monsterOne.body.isBroken)
-      pic.place(hero.pic, coords2Pos(hero.location)).place(monsterPic, coords2Pos(monsterOne.location))
+      pic = pic.place(hero.pic, coords2Pos(hero.location)).place(monsterPic, coords2Pos(monsterOne.location))
       
       //health bar (replace max_hp and current_hp with the correct values from hero object)
       val max_hp = 50
