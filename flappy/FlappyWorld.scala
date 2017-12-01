@@ -128,6 +128,7 @@ object FlappyWorld extends App {
         case Key.Numpad3 => SouthEast
         case Key.Numpad4 => West
         case Key.Numpad5 => NoDirection
+        case Key.Space => NoDirection
         case Key.Numpad6 => East
         case Key.Numpad7 => NorthWest
         case Key.Numpad8 => North
