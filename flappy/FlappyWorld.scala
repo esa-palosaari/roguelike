@@ -31,6 +31,7 @@ object FlappyWorld extends App {
   val wallPic = rectangle(tileSize, tileSize, LightGray)
   val stairsPic = rectangle(tileSize, tileSize, Gray)
   val monsterPic = circle(20, Brown)
+  val gameOver = Pic.apply("pics/Game_Over.png")
   
   def makeBackground() = rectangle(width, height, Black)
     
@@ -52,6 +53,10 @@ object FlappyWorld extends App {
   
   var hero = new Hero(4, null, North)
   var monsterOne: Monster = null 
+  var monsterTwo: Monster = null 
+//  var monsterThree: Monster = null 
+//  var monsterFour: Monster = null 
+//  var monsterFive: Monster = null 
   
   //world generation stuff
   var floor: RobotWorld = null
@@ -79,6 +84,9 @@ object FlappyWorld extends App {
     hero.place(floor, start._2)
     
     monsterOne = new Monster("one", floor.addRobot(getRandomEmptyTile(new Random())._2, North), hero, pathfinder)
+    monsterOne.body.brain = Some(monsterOne)
+    
+        monsterOne = new Monster("one", floor.addRobot(getRandomEmptyTile(new Random())._2, North), hero, pathfinder)
     monsterOne.body.brain = Some(monsterOne)
 
     floor_pic = makeBackground()
@@ -112,20 +120,24 @@ object FlappyWorld extends App {
     def makePic() = {
       var pic = floor_pic
       
-      if(hero.currentHealthPoints <= 0) {
-        pic
-        stop()
-      }
+
 
       if(!monsterOne.body.isBroken) {
         pic = pic.place(hero.pic, coords2Pos(hero.location)).place(monsterPic, coords2Pos(monsterOne.location))
       } else {
         pic = pic.place(hero.pic, coords2Pos(hero.location))
       }
+      
+     if(hero.currentHealthPoints <= 0) {
+        pic = gameOver
+        stop()
+        pic
+      } else {
       //health bar (replace max_hp and current_hp with the correct values from hero object)
       val max_hp = hero.maxHealthPoints
       val current_hp = hero.currentHealthPoints
       pic.place(rectangle(128, 16, Red), new Pos(width / 2, 12)).place(rectangle(Math.max((128 * current_hp) / max_hp, 1), 16, Green), new Pos(width / 2, 12))
+      }
     }
     
     // And whenever cursor key is pressed we make it move
@@ -167,11 +179,6 @@ object FlappyWorld extends App {
         if(hero.neighboringSquare(d).robot.isDefined) {
           hero.fight(hero.neighboringSquare(d).robot.get)
         }
-        if(hero.currentHealthPoints <= 0) {
-         
-          stop()  // Game over
-        }
-        
         monsterOne.body.takeTurn
         if(!monsterOne.body.isBroken && monsterOne.body.neighboringSquare(monsterOne.body.facing).robot.contains(hero)) {
           monsterOne.fight
