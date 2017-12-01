@@ -22,8 +22,8 @@ import s1._
  * 
  * Look from RobotBody how to move Hero and other stuff.
  */
-class Hero(visibleRadius: Int, world: RobotWorld, initialLocation: Coords, initialFacing: os1.grid.Direction) 
-  extends RobotBody(world, initialLocation, initialFacing) {
+class Hero(visibleRadius: Int, initialLocation: Coords, initialFacing: os1.grid.Direction) 
+  extends RobotBody(null, initialLocation, initialFacing) {
 	
   var radius = visibleRadius;
     
@@ -35,6 +35,26 @@ class Hero(visibleRadius: Int, world: RobotWorld, initialLocation: Coords, initi
 
 	val animationSpeed = 20  // every 6th model update.
   
+	def visibleFrom(loc: Coords): Boolean = {
+    val dx = if(loc.x - location.x < 0) -1 else 1
+    val dy = if(loc.y - location.y < 0) -1 else 1
+    val mx = abs(location.x - loc.x)
+    val my = abs(location.y - loc.y)
+    val bigger = max(mx, my)
+    for(i <- 1 until bigger){
+      
+      val loca = Coords(
+          (0.5 + location.x.toFloat + dx * ((i * mx.toFloat) / bigger)).toInt,
+          (0.5 + location.y.toFloat + dy * ((i * my.toFloat) / bigger)).toInt
+      )
+      val elem = this.world.elementAt(loca)
+      if(elem == Wall){
+        return false
+      }
+    }
+    true
+  }
+	
   // returns the direction (wrapped in Some) from monster to hero 
   // May be None if the hero cannot see the monster.
 	def visibilityToMonster(loc: Coords): Option[os1.grid.Direction] = {

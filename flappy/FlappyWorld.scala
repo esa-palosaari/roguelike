@@ -53,7 +53,7 @@ object FlappyWorld extends App {
     }
   }
   
-  var hero = new Hero(4, null, null, North)
+  var hero = new Hero(4, null, North)
   var monsterOne: Monster = null 
   
   
@@ -117,9 +117,10 @@ object FlappyWorld extends App {
     
     def makePic() = {
       var pic = floor_pic
-      println("hero: " + coords2Pos(hero.location))
-      println("monster: " + coords2Pos(monsterOne.location))
-      println("monster crashed: " + monsterOne.body.isBroken)
+      //println("hero: " + coords2Pos(hero.location))
+      //println("monster: " + coords2Pos(monsterOne.location))
+      if(monsterOne.body.isBroken)
+        println("monster crashed: " + monsterOne.body.isBroken)
       pic.place(hero.pic, coords2Pos(hero.location)).place(monsterPic, coords2Pos(monsterOne.location))
       //pic.place(monsterPic, coords2Pos(monsterOne.location))
     }
@@ -147,7 +148,7 @@ object FlappyWorld extends App {
       }
       hero.spinTowards(d)
       
-      println("DEBUG:", hero.neighboringSquare(d)) // DEBUG
+      //println("DEBUG:", hero.neighboringSquare(d)) // DEBUG
         
       if(hero.facing == NoDirection){
         hero.neighboringSquare(d) match {
