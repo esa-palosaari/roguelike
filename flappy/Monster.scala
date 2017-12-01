@@ -43,7 +43,8 @@ class Monster (name: String, body: RobotBody, val hero: Hero, val pathFinder: Pa
   }
   
   def fight() = {
-    ???
+    this.body.currentHealthPoints -= r.nextInt(this.body.currentHealthPoints)
+    hero.currentHealthPoints -= r.nextInt(20)
   }
   
 }
