@@ -1,5 +1,8 @@
 Ohjelmointistudio 1:n miniprojekti, roguelike-peli.
 
+FlappyWorld.scala has the start place.
+
+
 Ryhmä: Esa Palosaari (618573), Jouni Lohikoski, Erik Boström
 
 Plan in Google Docs: 
