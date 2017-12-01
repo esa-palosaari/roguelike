@@ -5,6 +5,7 @@ import os1.monsters._
 import os1.grid._
 import scala.swing.event.Key
 import scala.util.Random
+import scala.collection.mutable.Queue
 
 object FlappyWorld extends App {
   
@@ -55,6 +56,8 @@ object FlappyWorld extends App {
   
   //world generation stuff
   var floor: RobotWorld = null
+  var pathfinder: PathFinder = null
+  
   var floor_pic = makeBackground()
   
   def getRandomEmptyTile(rn: Random): (Square, Coords) = {
@@ -71,6 +74,7 @@ object FlappyWorld extends App {
   
   def createNewFloor(): Unit = {
     floor = WorldGenerator.default(floorWidth, floorHeight, rand)
+    pathfinder = new PathFinder(floor)
     
     val start = getRandomEmptyTile(rand)
     hero.place(floor, start._2)
@@ -95,6 +99,8 @@ object FlappyWorld extends App {
    * listening to key presses and mouse movements and most importantly, drawing
    * Flappy. (or whatever the model depicts) 
    */
+  
+  var path: Option[Queue[os1.grid.Direction]] = None
   
   val view = new s1.gui.mutable.View(Flappy) {
     // Let's store the model into 'bird' for more clarity
@@ -132,16 +138,35 @@ object FlappyWorld extends App {
       hero.spinTowards(d)
       
       println("DEBUG:", hero.neighboringSquare(d)) // DEBUG
-      
-      if(hero.canMoveTowards(d))
-        hero.moveTowards(d)
         
       if(hero.facing == NoDirection){
         hero.neighboringSquare(d) match {
           case _: Stairs => createNewFloor()
-          case _ => Unit
+          case _ => {
+            path match{
+              case None => {
+                val tile = getRandomEmptyTile(rand)
+                val exit_location = floor.allElementsIndexes.find(p => p._1 match{
+                  case _: Stairs => true
+                  case _ => false
+                }).get._2
+                val pt = pathfinder.findPath(hero.location, exit_location)
+                d = pt.dequeue()
+                path = Some(pt)
+              }
+              case Some(q) => {
+                d = q.dequeue()
+                if(q.isEmpty){
+                  path = None
+                }
+              }
+            }
+          }
         }
       }
+      
+      if(hero.canMoveTowards(d))
+        hero.moveTowards(d)
     } 
     
   }
