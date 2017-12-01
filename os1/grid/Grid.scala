@@ -79,12 +79,35 @@ abstract class Grid[ElementType: ClassTag](val width: Int, val height: Int) {
       if (this.contains(cardinal)) {
         results += this(cardinal)
       }
-      val ordinal = cardinal.neighbor(direction.clockwise)
-      if (includeDiagonals && this.contains(ordinal)) {
-        results += this(ordinal)
+    }
+    if(includeDiagonals){
+      for(direction <- Direction.Clockwise){
+        val ordinal = location.neighbor(direction).neighbor(direction.clockwise)
+        if(this.contains(ordinal)){
+          results += this(ordinal)
+        }
       }
     }
     results.toVector
+  }
+  
+  def neighborsIndexes(location: Coords, includeDiagonals: Boolean) = {
+    val results = Buffer[(ElementType, Coords)]()
+    for(direction <- Direction.Clockwise){
+      val cardinal = location.neighbor(direction)
+      if(this.contains(cardinal)){
+        results.append((this(cardinal), cardinal))
+      }
+    }
+    if(includeDiagonals){
+      for(direction <- Direction.Clockwise){
+        val ordinal = location.neighbor(direction).neighbor(direction.clockwise)
+        if(this.contains(ordinal)){
+          results.append((this(ordinal), ordinal))
+        }
+      }
+    }
+    results
   }
   
 

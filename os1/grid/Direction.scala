@@ -55,6 +55,16 @@ case object NoDirection extends Direction(0, 0)
   * @see the class [[Direction]] */
 object Direction {
   
+  def apply(x: Int, y: Int) = {
+    if(x < 0){
+      if(y < 0) NorthWest else if (y > 0) SouthWest else West
+    }else if(x > 0){
+      if(y < 0) NorthEast else if (y > 0) SouthEast else East
+    }else{
+      if(y < 0) North else if (y > 0) South else NoDirection
+    }
+  }
+  
   /** a collection of all the four directions, in clockwise order starting with `North` */ 
   val Clockwise = Vector[Direction](North, East, South, West)
 
