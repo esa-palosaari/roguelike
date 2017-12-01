@@ -56,7 +56,6 @@ object FlappyWorld extends App {
   var hero = new Hero(4, null, North)
   var monsterOne: Monster = null 
   
-  
   //world generation stuff
   var floor: RobotWorld = null
   var pathfinder: PathFinder = null
@@ -84,7 +83,7 @@ object FlappyWorld extends App {
     
     monsterOne = new Monster("one", floor.addRobot(getRandomEmptyTile(new Random())._2, North), hero, pathfinder)
     monsterOne.body.brain = Some(monsterOne)
-    
+
     floor_pic = makeBackground()
     for(tile <- floor.allElementsIndexes){
       tile._1 match{
@@ -115,16 +114,15 @@ object FlappyWorld extends App {
     
     def makePic() = {
       var pic = floor_pic
-      //println("hero: " + coords2Pos(hero.location))
-      //println("monster: " + coords2Pos(monsterOne.location))
+
       if(monsterOne.body.isBroken)
         println("monster crashed: " + monsterOne.body.isBroken)
       pic.place(hero.pic, coords2Pos(hero.location)).place(monsterPic, coords2Pos(monsterOne.location))
-      //pic.place(monsterPic, coords2Pos(monsterOne.location))
     }
     
     // And whenever cursor key is pressed we make it move
     override def onKeyUp(key: Key) = {
+      // bird.jump()
       var d : os1.grid.Direction = key match {
         case Key.Up => North
         case Key.Down => South
@@ -155,7 +153,7 @@ object FlappyWorld extends App {
         }
       }
       
-      if(hero.canMoveTowards(d)) {
+      if(hero.canMoveTowards(d)){
         hero.moveTowards(d)
         monsterOne.body.takeTurn()
       }
