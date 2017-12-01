@@ -29,7 +29,7 @@ object FlappyWorld extends App {
   val heroPic2 = circle(20, Green)
   val wallPic = rectangle(tileSize, tileSize, Red)
   val stairsPic = rectangle(tileSize, tileSize, Yellow)
-  val monsterPic = circle(20, Blue)
+  val monsterPic = circle(20, Brown)
   
   def makeBackground() = rectangle(width, height, Blue)
     
@@ -45,7 +45,7 @@ object FlappyWorld extends App {
   }
   
   var hero = new Hero(4, null, null, North)
-  var monsterOne: Monster = null
+  var monsterOne: Monster = null // new Monster("one", null, hero)
   
   
   //world generation stuff
@@ -70,7 +70,7 @@ object FlappyWorld extends App {
     val start = getRandomEmptyTile(rand)
     hero.place(floor, start._2)
     
-    val monsterOne = new Monster("one", floor.addRobot(getRandomEmptyTile(rand)._2, North), hero)
+    monsterOne = new Monster("one", floor.addRobot(getRandomEmptyTile(new Random())._2, North), hero)
     monsterOne.body.brain = Some(monsterOne)
     
     floor_pic = makeBackground()
@@ -103,8 +103,10 @@ object FlappyWorld extends App {
     
     def makePic() = {
       var pic = floor_pic
-      pic.place(heroPic2, coords2Pos(hero.location))
-      pic.place(monsterPic, coords2Pos(monsterOne.location))
+      println("hero: " + coords2Pos(hero.location))
+      println("monster: " + coords2Pos(monsterOne.location))
+      pic.place(heroPic2, coords2Pos(hero.location)).place(monsterPic, coords2Pos(monsterOne.location))
+      //pic.place(monsterPic, coords2Pos(monsterOne.location))
     }
     
     // And whenever any key is pressed we make it move
@@ -131,8 +133,10 @@ object FlappyWorld extends App {
       
       println("DEBUG:", hero.neighboringSquare(d)) // DEBUG
       
-      if(hero.canMoveTowards(d))
+      if(hero.canMoveTowards(d)) {
         hero.moveTowards(d)
+        monsterOne.moveBody
+      }
         
       if(hero.facing == NoDirection){
         hero.neighboringSquare(d) match {
