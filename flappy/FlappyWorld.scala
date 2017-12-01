@@ -128,7 +128,12 @@ object FlappyWorld extends App {
       if(hero.canMoveTowards(d))
         hero.moveTowards(d)
         
-        
+      if(hero.facing == NoDirection){
+        hero.neighboringSquare(d) match {
+          case _: Stairs => createNewFloor()
+          case _ => Unit
+        }
+      }
     } 
     
   }
