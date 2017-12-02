@@ -55,7 +55,7 @@ object FlappyWorld extends App {
      }
   }
   
-  var hero = new Hero(4, null, North)
+  var hero = new Hero(null, North)
   
   // using null pointers here is not good, but it's too late to change everything now.
   var monsters = new ArrayBuffer[Monster]()

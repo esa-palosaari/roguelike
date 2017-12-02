@@ -7,9 +7,9 @@ around with arrow or num pad keys. When the hero gets to the stairs (a Gray
 rectangle), the player can move it to the next level by pressing spacebar.
 
 There are also monsters lurking around. When they notice the hero they will
-start following it and try to kill it. When the hero's health (the green bar)
-has gone down to zero, the game ends. The hero can also attack and kill the
-monsters.
+start following it and try to kill it. When the hero's health (the green bar
+on a top of the window) has gone down to zero, the game ends. The hero can 
+also attack and kill the monsters if he has health points left.
 
 
 Ryhmä: Esa Palosaari (618573), Jouni Lohikoski, Erik Boström

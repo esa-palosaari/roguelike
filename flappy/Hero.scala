@@ -22,17 +22,17 @@ import s1._
  * 
  * Look from RobotBody how to move Hero and other stuff.
  */
-class Hero(visibleRadius: Int, initialLocation: Coords, initialFacing: os1.grid.Direction) 
+class Hero(initialLocation: Coords, initialFacing: os1.grid.Direction) 
   extends RobotBody(null, initialLocation, initialFacing) {
 	
-  var radius = visibleRadius;
+  //var radius = visibleRadius;
     
   val heroPic2 = circle(20, Green)
   val heroPic3 = circle(20, LightGray)
   val heroPics = Array(heroPic2, heroPic3)
   var pind = 1  // index of current picture of hero
-  var pic = heroPics(pind) //  circle(20, Green)
-  this.maxHealthPoints = 50
+  var pic = heroPics(pind) 
+  this.maxHealthPoints = 100
   this.currentHealthPoints = maxHealthPoints
 
 	val animationSpeed = 20  // every N th model update.
