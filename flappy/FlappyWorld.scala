@@ -46,8 +46,9 @@ object FlappyWorld extends App {
     
     /* Each time the model is updated ...*/
     def act()={
-      timerCnt = (timerCnt + 1 ) % hero.animationSpeed // Speed of animation. animationSpeed = Nth model update.
-      if (timerCnt == 0) {
+      timerCnt = timerCnt + 1
+      // Speed of animation. animationSpeed = Nth model update.
+      if ((timerCnt % hero.animationSpeed) == 0) {
         hero.pind = (hero.pind + 1) % hero.heroPics.length
         hero.pic = hero.heroPics(hero.pind)
       }

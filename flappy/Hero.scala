@@ -32,7 +32,7 @@ class Hero(initialLocation: Coords, initialFacing: os1.grid.Direction)
   val heroPics = Array(heroPic2, heroPic3)
   var pind = 1  // index of current picture of hero
   var pic = heroPics(pind) 
-  this.maxHealthPoints = 100
+  this.maxHealthPoints = 400
   this.currentHealthPoints = maxHealthPoints
 
 	val animationSpeed = 20  // every N th model update.
