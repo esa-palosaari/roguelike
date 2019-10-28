@@ -1,4 +1,4 @@
-Ohjelmointistudio 1:n miniprojekti, roguelike-peli.
+Roguelike game
 
 FlappyWorld.scala in the flappy package has the start place.
 
@@ -13,8 +13,4 @@ on a top of the window) has gone down to zero, the game ends. The hero can
 also attack and kill the monsters if he has health points left.
 
 
-Ryhmä: Esa Palosaari (618573), Jouni Lohikoski, Erik Boström
-
-
-Plan in Google Docs: 
-https://docs.google.com/document/d/1Ekn1GsDRp5BrVgNNlXu01Sjf5H8v_gTUoFD4i-l2KSk/
+Esa Palosaari, Jouni Lohikoski, Erik Boström
